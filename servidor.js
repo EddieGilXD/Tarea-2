@@ -30,6 +30,22 @@ connection.query('SELECT * FROM Clientes',(err, results, fields) =>{
         console.log("Error en query: ", err)
     } else {
         console.log("Listado de todos los clientes creados: ", results)                
-    }    
-    closeConnection();
+    }        
 })
+
+connection.query('SELECT * FROM Clientes INNER JOIN Cuentas ON Clientes.id_cliente = Cuentas.id_cliente', (err, results) =>{
+    if (err){
+        console.log("Error en query: ", err);
+    }else{
+        console.log("Listado de todas las cuentas que estan asociadas a clientes: ", results)
+    }    
+})
+
+connection.query('SELECT * FROM Clientes LEFT JOIN Cuentas ON Clientes.id_cliente = Cuentas.id_cliente WHERE Cuentas.id_cliente IS NULL',(err, results) => {
+    if(err){
+        console.log("Error en query: ", err);
+    }else{
+        console.log("Listado de todos los clientes que no tienen cuentas asociadas", results)
+    }
+    closeConnection();
+}) 
